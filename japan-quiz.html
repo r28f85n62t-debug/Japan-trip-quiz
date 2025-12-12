@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>كويز رحلة اليابان 🎌</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+  :root{
+  --bg:#0b1020;
+  --card: rgba(255,255,255,.10);
+  --card2: rgba(255,255,255,.14);
+  --stroke: rgba(255,255,255,.18);
+  --text:#f4f6ff;
+  --muted: rgba(244,246,255,.75);
+  --shadow: 0 20px 60px rgba(0,0,0,.45);
+  --radius: 18px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Tajawal",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a{color:inherit}
+code{background:rgba(0,0,0,.25); padding:.15rem .35rem; border-radius:10px}
+
+.hero{
+  min-height:100vh;
+  background-image:
+    url("https://images.unsplash.com/photo-1549692520-acc6669e2f0c?auto=format&fit=crop&w=2100&q=70");
+  background-size:cover;
+  background-position:center;
+  position:relative;
+}
+.hero__overlay{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(1200px 700px at 70% 25%, rgba(255,255,255,.12), rgba(0,0,0,0)),
+    linear-gradient(180deg, rgba(10,12,25,.55), rgba(10,12,25,.86));
+}
+.container{
+  position:relative;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 16px 60px;
+}
+
+.brand{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  margin: 20px 0 18px;
+}
+.brand__badge{
+  width:52px;height:52px;
+  display:grid; place-items:center;
+  border-radius:16px;
+  background: rgba(255,255,255,.14);
+  border:1px solid var(--stroke);
+  box-shadow: var(--shadow);
+  font-size: 22px;
+}
+h1{margin:0; font-size: 34px; letter-spacing:.2px}
+h2{margin:0 0 12px; font-size: 24px}
+h3{margin:0 0 10px}
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  padding: 18px 18px 16px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  margin: 12px 0;
+}
+.hidden{display:none !important}
+.muted{color: var(--muted)}
+.small{font-size:.92rem; line-height:1.45}
+.label{font-weight:700; font-size: 15px}
+.row{margin: 12px 0}
+.grid2{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+.between{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+
+.input, select{
+  width:100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border:1px solid var(--stroke);
+  background: rgba(0,0,0,.22);
+  color: var(--text);
+  outline:none;
+  font-size: 16px;
+}
+
+.btn{
+  cursor:pointer;
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,.10);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-weight: 800;
+  letter-spacing:.2px;
+  transition: transform .08s ease, background .12s ease;
+}
+.btn:hover{background: rgba(255,255,255,.14)}
+.btn:active{transform: translateY(1px)}
+
+.primary{
+  background: rgba(126,231,135,.20);
+  border-color: rgba(126,231,135,.35);
+}
+.primary:hover{background: rgba(126,231,135,.28)}
+.success{
+  background: rgba(76,182,255,.22);
+  border-color: rgba(76,182,255,.35);
+}
+.success:hover{background: rgba(76,182,255,.30)}
+.danger{
+  background: rgba(255,84,84,.18);
+  border-color: rgba(255,84,84,.28);
+}
+.danger:hover{background: rgba(255,84,84,.25)}
+
+.details{
+  margin-top: 14px;
+  border-radius: 14px;
+  border:1px solid rgba(255,255,255,.14);
+  padding: 10px 12px;
+  background: rgba(0,0,0,.18);
+}
+.details > summary{cursor:pointer; font-weight:800}
+.details.danger{border-color: rgba(255,84,84,.28)}
+
+.link{display:inline-block; margin-top: 8px; opacity:.95}
+.steps{margin: 10px 0 0; line-height:1.7}
+
+.quizTop{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom: 8px;
+}
+.pill{
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.20);
+  font-weight: 800;
+}
+
+.choices{
+  display:grid;
+  gap:10px;
+  margin: 12px 0 8px;
+}
+.choice{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-radius: 16px;
+  padding: 12px 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.20);
+  cursor:pointer;
+  transition: transform .08s ease, background .12s ease, border-color .12s ease;
+}
+.choice:hover{background: rgba(0,0,0,.25)}
+.choice:active{transform: translateY(1px)}
+.choice input{transform: scale(1.1)}
+.choice.selected{
+  border-color: rgba(126,231,135,.45);
+  background: rgba(126,231,135,.18);
+}
+
+.qImageWrap{
+  position:relative;
+  border-radius: 18px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.25);
+  margin: 6px 0 12px;
+}
+.qImageWrap img{
+  display:block;
+  width:100%;
+  height: 210px;
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.02);
+}
+.qImageLabel{
+  position:absolute;
+  right: 10px; bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.20);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.divider{
+  height:1px;
+  background: rgba(255,255,255,.15);
+  margin: 14px 0;
+}
+
+.scoreGrid{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:10px;
+}
+.scoreBox{
+  border-radius: 18px;
+  padding: 14px 14px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.20);
+}
+.scoreName{font-weight: 900; opacity:.95}
+.scoreValue{font-size: 34px; font-weight: 900; margin-top: 4px}
+.scoreMeta{color: var(--muted); margin-top: 2px; font-size: 14px}
+
+.finalDetails{
+  display:grid;
+  gap:10px;
+}
+.qa{
+  border-radius: 16px;
+  padding: 12px 12px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.18);
+}
+.qa .q{font-weight:900}
+.qa .a{margin-top: 6px; color: var(--muted)}
+.qa .ok{color: rgba(126,231,135,.95); font-weight:900}
+.qa .bad{color: rgba(255,140,140,.95); font-weight:900}
+
+.footer{margin-top: 20px; opacity:.85}
+
+@media (max-width: 780px){
+  .scoreGrid{grid-template-columns: 1fr}
+  h1{font-size: 30px}
+  .qImageWrap img{height: 180px}
+}
+
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <div class="brand">
+        <div class="brand__badge">🎌</div>
+        <div>
+          <h1>كويز رحلة اليابان</h1>
+          <p class="muted">٣ متسابقين: <b>أنت</b> + <b>نايف</b> + <b>أحلام</b> — النتايج تطلع بعد ما الكل يسلّم.</p>
+        </div>
+      </div>
+
+      <div class="card" id="startCard">
+        <h2>ابدأ</h2>
+        <p class="muted">اختر اسمك وابدأ تجاوب ١٠ أسئلة عن الرحلة.</p>
+
+        <div class="row">
+          <label class="label">المتسابق</label>
+          <select id="playerSelect" class="input">
+            <option value="Nawaf">أنا</option>
+            <option value="Naif">نايف</option>
+            <option value="Ahlam">أحلام</option>
+          </select>
+        </div>
+
+        <div class="row grid2">
+          <button class="btn primary" id="startBtn">يلا نبدأ</button>
+          <button class="btn" id="viewScoreBtn" title="تشوف التقدم والنتائج (تطلع كاملة بعد 3 تسليمات)">لوحة النتائج</button>
+        </div>
+
+        <details class="details">
+          <summary>مهم: إذا فتحته من (Files) على الآيفون</summary>
+          <div class="muted small">
+            بعض معاينات الملفات ما تشغّل الجافاسكربت، فـ زر البدء ما يستجيب.<br/>
+            الحل: افتح الملف من Safari أو ارفعه على موقع (GitHub Pages / Netlify).
+          </div>
+        </details>
+      </div>
+
+      <div class="card hidden" id="quizCard">
+        <div class="quizTop">
+          <div class="pill" id="playerPill"></div>
+          <div class="pill" id="progressPill"></div>
+        </div>
+
+        <div id="qImageWrap" class="qImageWrap">
+          <img id="qImage" alt="" />
+          <div class="qImageLabel" id="qImageLabel"></div>
+        </div>
+
+        <h2 id="qTitle"></h2>
+        <div id="choices" class="choices"></div>
+
+        <div class="row grid2">
+          <button class="btn" id="prevBtn">السابق</button>
+          <button class="btn primary" id="nextBtn">التالي</button>
+        </div>
+
+        <div class="row">
+          <button class="btn success" id="submitBtn">تسليم الإجابات</button>
+        </div>
+
+        <p class="muted small" id="hintArea"></p>
+      </div>
+
+      <div class="card hidden" id="scoreCard">
+        <div class="row between">
+          <div>
+            <h2>لوحة النتائج</h2>
+            <p class="muted" id="statusLine"></p>
+          </div>
+          <button class="btn" id="backBtn">رجوع</button>
+        </div>
+
+        <div class="scoreGrid">
+          <div class="scoreBox">
+            <div class="scoreName">أنا</div>
+            <div class="scoreValue" id="scoreNawaf">—</div>
+            <div class="scoreMeta" id="metaNawaf"></div>
+          </div>
+          <div class="scoreBox">
+            <div class="scoreName">نايف</div>
+            <div class="scoreValue" id="scoreNaif">—</div>
+            <div class="scoreMeta" id="metaNaif"></div>
+          </div>
+          <div class="scoreBox">
+            <div class="scoreName">أحلام</div>
+            <div class="scoreValue" id="scoreAhlam">—</div>
+            <div class="scoreMeta" id="metaAhlam"></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="finalWrap" class="hidden">
+          <h3>تفاصيل الإجابات (تطلع بعد ما الكل يسلّم)</h3>
+          <div id="finalDetails" class="finalDetails"></div>
+        </div>
+
+        <details class="details danger">
+          <summary>مسح النتائج (Reset)</summary>
+          <div class="row">
+            <input id="resetCode" class="input" placeholder="اكتب كود المسح" />
+            <button class="btn danger" id="resetBtn">امسح</button>
+          </div>
+          <div class="muted small">الكود الافتراضي: <code>japan-reset</code></div>
+        </details>
+      </div>
+
+      <footer class="footer muted small">
+        نسخة ملف واحد (كل شيء داخل هذا الـ HTML) — أسهل للآيفون.
+      </footer>
+    </div>
+  </header>
+
+  <script>
+  // ===============================
+// OPTIONAL ONLINE MODE (Firebase):
+// 1) Create Firebase project
+// 2) Enable Realtime Database + Anonymous Auth
+// 3) Paste your config here (keep it as {} to stay OFFLINE)
+// ===============================
+const FIREBASE_CONFIG = {}; // <-- paste here if you want online mode
+
+// ----- Quiz Data (10 questions) -----
+const QUESTIONS = [
+  {
+    id: "q1",
+    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1600&q=70",
+    tag: "طوكيو",
+    title: "متى كان موعد وصولنا لطوكيو في خطة الرحلة؟",
+    choices: [
+      "5 أبريل 2025 — 6:30 مساءً",
+      "4 أبريل 2025 — 11:00 صباحًا",
+      "6 أبريل 2025 — 2:00 ظهرًا",
+      "7 أبريل 2025 — 9:00 مساءً"
+    ],
+    answer: 0
+  },
+  {
+    id: "q2",
+    image: "https://images.unsplash.com/photo-1549693578-d683be217e58?auto=format&fit=crop&w=1600&q=70",
+    tag: "ساكورا",
+    title: "أول نشاط يوم 6 أبريل كان وين؟",
+    choices: [
+      "ديزني سي",
+      "ضريح ميجي (Meiji Shrine)",
+      "أكيهابارا",
+      "أوساكا دوتونبوري"
+    ],
+    answer: 1
+  },
+  {
+    id: "q3",
+    image: "https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=70",
+    tag: "فوجي",
+    title: "رحلة جبل فوجي (Klook) كانت بأي تاريخ؟",
+    choices: [
+      "6 أبريل",
+      "7 أبريل",
+      "8 أبريل",
+      "10 أبريل"
+    ],
+    answer: 1
+  },
+  {
+    id: "q4",
+    image: "https://images.unsplash.com/photo-1552633835-6e1710d29ed3?auto=format&fit=crop&w=1600&q=70",
+    tag: "DisneySea",
+    title: "تذكرة ديزني سي كانت متى؟",
+    choices: [
+      "7 أبريل",
+      "8 أبريل",
+      "9 أبريل",
+      "11 أبريل"
+    ],
+    answer: 1
+  },
+  {
+    id: "q5",
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=70",
+    tag: "Wagyu",
+    title: "عشاء Wagyu Yakiniku PANGA كان بأي وقت؟",
+    choices: [
+      "6:00 مساءً",
+      "7:30 مساءً",
+      "8:30 مساءً",
+      "9:30 مساءً"
+    ],
+    answer: 2
+  },
+  {
+    id: "q6",
+    image: "https://images.unsplash.com/photo-1501696461400-7c972a33b0b5?auto=format&fit=crop&w=1600&q=70",
+    tag: "Shinkansen",
+    title: "قطار الشينكانسن Nozomi 1 من طوكيو إلى كيوتو كان الساعة كم؟",
+    choices: [
+      "6:00 صباحًا",
+      "9:00 صباحًا",
+      "12:00 ظهرًا",
+      "4:00 عصرًا"
+    ],
+    answer: 0
+  },
+  {
+    id: "q7",
+    image: "https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=70",
+    tag: "Kyoto",
+    title: "في كيوتو: لازم نسجّل دخول للريوكان قبل كم؟",
+    choices: [
+      "قبل 6 مساءً",
+      "قبل 7 مساءً",
+      "قبل 8 مساءً",
+      "قبل 9 مساءً"
+    ],
+    answer: 2
+  },
+  {
+    id: "q8",
+    image: "https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=70",
+    tag: "Osaka",
+    title: "حجز مطعم Aburiya Dotonbori Midousuji كان متى؟",
+    choices: [
+      "11 أبريل — 4:00 مساءً",
+      "10 أبريل — 8:00 مساءً",
+      "12 أبريل — 1:00 ظهرًا",
+      "9 أبريل — 4:00 مساءً"
+    ],
+    answer: 0
+  },
+  {
+    id: "q9",
+    image: "https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=1600&q=70",
+    tag: "Tokyo Food",
+    title: "يوم 15 أبريل في خطتنا كان مخصص لـ…",
+    choices: [
+      "أكيهابارا + جولة أكل شوارع",
+      "جبل فوجي",
+      "ديزني سي",
+      "كيوتو + ريوكان"
+    ],
+    answer: 0
+  },
+  {
+    id: "q10",
+    image: "https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=70",
+    tag: "Group",
+    title: "كم عدد الأشخاص في الرحلة؟",
+    choices: [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    answer: 1
+  },
+];
+
+// ----- Players -----
+const PLAYERS = [
+  { key: "Nawaf", label: "أنا" },
+  { key: "Naif", label: "نايف" },
+  { key: "Ahlam", label: "أحلام" },
+];
+
+const RESET_CODE = "japan-reset";
+const STORAGE_KEY = "japanTripQuiz_v1";
+
+// ----- State -----
+let currentPlayer = "Nawaf";
+let currentIndex = 0;
+let answers = {}; // {qId: choiceIndex}
+
+// ----- Helpers -----
+const $ = (id) => document.getElementById(id);
+
+function nowISO(){
+  return new Date().toISOString();
+}
+
+function loadLocal(){
+  try{
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+  }catch(e){ return {}; }
+}
+
+function saveLocal(data){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function getEmptyStore(){
+  const base = { submissions: {} };
+  for (const p of PLAYERS){
+    base.submissions[p.key] = null;
+  }
+  return base;
+}
+
+function getStore(){
+  const s = loadLocal();
+  if (!s || !s.submissions) return getEmptyStore();
+  // ensure keys exist
+  for (const p of PLAYERS){
+    if (!(p.key in s.submissions)) s.submissions[p.key] = null;
+  }
+  return s;
+}
+
+function setSubmission(playerKey, submission){
+  const store = getStore();
+  store.submissions[playerKey] = submission;
+  saveLocal(store);
+}
+
+function clearAll(){
+  saveLocal(getEmptyStore());
+}
+
+function countDone(store){
+  return PLAYERS.filter(p => store.submissions[p.key]).length;
+}
+
+function computeScore(submission){
+  if (!submission) return null;
+  let score = 0;
+  for (const q of QUESTIONS){
+    if (submission.answers?.[q.id] === q.answer) score++;
+  }
+  return score;
+}
+
+function formatDoneMeta(submission){
+  if (!submission) return "ما سلّم";
+  const d = new Date(submission.submittedAt);
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mm = String(d.getMinutes()).padStart(2,'0');
+  return `سلّم ${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${hh}:${mm}`;
+}
+
+function show(el){ el.classList.remove("hidden"); }
+function hide(el){ el.classList.add("hidden"); }
+
+// ----- UI Wiring -----
+const startCard = $("startCard");
+const quizCard = $("quizCard");
+const scoreCard = $("scoreCard");
+
+$("startBtn").addEventListener("click", () => {
+  currentPlayer = $("playerSelect").value;
+  const store = getStore();
+  if (store.submissions[currentPlayer]){
+    alert("هالمتسابق مسلّم من قبل. روح لوحة النتائج أو سو Reset إذا تبي تعيد.");
+    return;
+  }
+  // reset per-run state
+  currentIndex = 0;
+  answers = {};
+  hide(startCard); hide(scoreCard); show(quizCard);
+  renderQuestion();
+});
+
+$("viewScoreBtn").addEventListener("click", () => {
+  hide(startCard); hide(quizCard); show(scoreCard);
+  renderScoreboard();
+});
+
+$("backBtn").addEventListener("click", () => {
+  hide(scoreCard); hide(quizCard); show(startCard);
+});
+
+$("prevBtn").addEventListener("click", () => {
+  if (currentIndex > 0){
+    currentIndex--;
+    renderQuestion();
+  }
+});
+
+$("nextBtn").addEventListener("click", () => {
+  if (currentIndex < QUESTIONS.length - 1){
+    currentIndex++;
+    renderQuestion();
+  }
+});
+
+$("submitBtn").addEventListener("click", () => {
+  // ensure all answered
+  const missing = QUESTIONS.filter(q => !(q.id in answers));
+  if (missing.length){
+    alert(`باقي ${missing.length} سؤال/أسئلة بدون إجابة.`);
+    return;
+  }
+  const submission = {
+    answers,
+    submittedAt: nowISO(),
+  };
+  setSubmission(currentPlayer, submission);
+  hide(quizCard); show(scoreCard);
+  renderScoreboard();
+  alert("تم التسليم ✅");
+});
+
+$("resetBtn").addEventListener("click", () => {
+  const code = $("resetCode").value.trim();
+  if (code !== RESET_CODE){
+    alert("الكود غلط.");
+    return;
+  }
+  if (!confirm("أكيد تبي تمسح كل النتائج؟")) return;
+  clearAll();
+  $("resetCode").value = "";
+  renderScoreboard();
+});
+
+// ----- Render Question -----
+function renderQuestion(){
+  const q = QUESTIONS[currentIndex];
+
+  $("playerPill").textContent = `المتسابق: ${PLAYERS.find(p=>p.key===currentPlayer)?.label || currentPlayer}`;
+  $("progressPill").textContent = `السؤال ${currentIndex+1} / ${QUESTIONS.length}`;
+
+  $("qTitle").textContent = q.title;
+
+  $("qImage").src = q.image;
+  $("qImageLabel").textContent = q.tag || "Japan";
+
+  const wrap = $("choices");
+  wrap.innerHTML = "";
+
+  q.choices.forEach((text, idx) => {
+    const id = `${q.id}_${idx}`;
+    const div = document.createElement("label");
+    div.className = "choice";
+    div.htmlFor = id;
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = q.id;
+    input.id = id;
+    input.value = idx;
+
+    const span = document.createElement("span");
+    span.textContent = text;
+
+    div.appendChild(input);
+    div.appendChild(span);
+    wrap.appendChild(div);
+
+    // restore selection
+    if (answers[q.id] === idx){
+      input.checked = true;
+      div.classList.add("selected");
+    }
+
+    div.addEventListener("click", () => {
+      answers[q.id] = idx;
+      // highlight
+      [...wrap.querySelectorAll(".choice")].forEach(x=>x.classList.remove("selected"));
+      div.classList.add("selected");
+      $("hintArea").textContent = "";
+    });
+  });
+
+  // buttons visibility
+  $("prevBtn").disabled = currentIndex === 0;
+  $("nextBtn").disabled = currentIndex === QUESTIONS.length - 1;
+
+  $("hintArea").textContent = currentIndex < QUESTIONS.length - 1
+    ? "تقدر تكمّل التالي، أو ترجع تعدّل إجاباتك بأي وقت قبل التسليم."
+    : "آخر سؤال! بعد ما تجاوب، اضغط تسليم الإجابات.";
+
+  // show submit only on last question
+  $("submitBtn").style.display = (currentIndex === QUESTIONS.length - 1) ? "block" : "none";
+}
+
+// ----- Render Scoreboard -----
+function renderScoreboard(){
+  const store = getStore();
+  const done = countDone(store);
+  $("statusLine").textContent = `تم التسليم: ${done} / ${PLAYERS.length} — النتايج الكاملة تطلع بعد 3 تسليمات.`;
+
+  for (const p of PLAYERS){
+    const sub = store.submissions[p.key];
+    const score = computeScore(sub);
+    $("score"+p.key).textContent = (score === null) ? "—" : `${score} / ${QUESTIONS.length}`;
+    $("meta"+p.key).textContent = formatDoneMeta(sub);
+  }
+
+  // final details after all submitted
+  if (done === PLAYERS.length){
+    show($("finalWrap"));
+    renderFinalDetails(store);
+  }else{
+    hide($("finalWrap"));
+    $("finalDetails").innerHTML = "";
+  }
+}
+
+function renderFinalDetails(store){
+  const target = $("finalDetails");
+  target.innerHTML = "";
+
+  // Winner
+  const scores = PLAYERS.map(p => ({
+    key:p.key,
+    label:p.label,
+    score: computeScore(store.submissions[p.key]) ?? -1
+  })).sort((a,b)=>b.score-a.score);
+
+  const winner = scores[0];
+  const tie = scores.filter(s=>s.score===winner.score).length>1;
+  const winLine = document.createElement("div");
+  winLine.className = "qa";
+  winLine.innerHTML = `<div class="q">🏆 ${tie ? "تعادل!" : "الفائز"}: ${tie ? scores.filter(s=>s.score===winner.score).map(s=>s.label).join(" + ") : winner.label}</div>
+  <div class="a muted">الترتيب: ${scores.map(s=>`${s.label} (${s.score}/${QUESTIONS.length})`).join(" — ")}</div>`;
+  target.appendChild(winLine);
+
+  // Per question correctness grid (by player)
+  for (const q of QUESTIONS){
+    const box = document.createElement("div");
+    box.className = "qa";
+
+    const correctText = q.choices[q.answer];
+    const lines = PLAYERS.map(p=>{
+      const sub = store.submissions[p.key];
+      const picked = sub.answers[q.id];
+      const pickedText = q.choices[picked];
+      const ok = picked === q.answer;
+      return `<div class="a"><span class="${ok ? "ok":"bad"}">${p.label}: ${ok ? "✅" : "❌"}</span> — اختار: <b>${escapeHtml(pickedText)}</b></div>`;
+    }).join("");
+
+    box.innerHTML = `
+      <div class="q">Q${QUESTIONS.indexOf(q)+1}. ${escapeHtml(q.title)}</div>
+      <div class="a muted">الإجابة الصحيحة: <b>${escapeHtml(correctText)}</b></div>
+      ${lines}
+    `;
+    target.appendChild(box);
+  }
+}
+
+function escapeHtml(s){
+  return String(s)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+// Init default store
+if (!localStorage.getItem(STORAGE_KEY)){
+  clearAll();
+}
+
+  </script>
+</body>
+</html>
